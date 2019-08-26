@@ -1,0 +1,18 @@
+a.job-link:visited {
+    color: #800080;
+}
+
+.job-item {
+}
+
+.job-title {
+}
+
+.jump-links {
+    position: fixed;
+    right: 16px;
+    bottom: 0;
+    z-index: 1;
+    background-color: #fff;
+    padding: 16px;
+}

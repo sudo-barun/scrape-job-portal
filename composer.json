@@ -1,0 +1,18 @@
+{
+    "autoload": {
+        "files": [
+            "src/functions.php"
+        ],
+        "psr-4": {
+            "App\\": "src/App/"
+        }
+    },
+    "require": {
+        "symfony/dom-crawler": "^3.4",
+        "symfony/css-selector": "^3.4",
+        "guzzlehttp/guzzle": "^6.3",
+        "symfony/console": "^3.4",
+        "vlucas/phpdotenv": "^3.4",
+        "northwoods/config": "^2.0"
+    }
+}

@@ -1,0 +1,13 @@
+version: '2.0'
+services:
+
+  web:
+    image: scrape_job_portal
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ..:/var/www
+    ports:
+      - ${PORT}:8080
+
