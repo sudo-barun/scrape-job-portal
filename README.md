@@ -9,7 +9,7 @@
 
 ## Setup
 1. `composer install`
-1. `npm install`
+1. `npm ci`
 1. `npm run prod`
 1. Copy `.env.example` to `.env`
 1. Update `.env` if required
