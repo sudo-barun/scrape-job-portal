@@ -2,10 +2,10 @@
 
 namespace App\Service;
 
-use App\Interfaces\JobPortal;
+use App\Interfaces\JobPortalInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
-class Jobsnepal extends AbstractJobPortal implements JobPortal
+class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
 {
     protected $prefix = 'jobsnepal';
     protected $baseUrl = 'https://www.jobsnepal.com/category/it-jobs';

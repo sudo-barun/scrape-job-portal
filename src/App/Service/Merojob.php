@@ -2,10 +2,10 @@
 
 namespace App\Service;
 
-use App\Interfaces\JobPortal;
+use App\Interfaces\JobPortalInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
-class Merojob extends AbstractJobPortal implements JobPortal
+class Merojob extends AbstractJobPortal implements JobPortalInterface
 {
     protected $prefix = 'merojob';
     protected $baseUrl = 'https://merojob.com/category/it-telecommunication/';

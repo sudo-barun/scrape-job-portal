@@ -13,3 +13,15 @@ services:
     environment:
       - PORT=8080
 
+  postgres:
+    image: postgres:11
+    volumes:
+      - pg_data:/var/lib/postgresql/data/pg_data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+      PGDATA: /var/lib/postgresql/data/pg_data
+
+volumes:
+  pg_data:

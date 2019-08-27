@@ -5,7 +5,9 @@ ini_set('display_errors', 1);
 
 require_once __DIR__ . '/../bootstrap.php';
 
-$jobService = new \App\Service\Job();
+$dataStore = \App\Util::getDataStore();
+
+$jobService = new \App\Service\Job($dataStore);
 $portalJobs = $jobService->getAll($_GET);
 $q = $_GET['q'] ?? '';
 

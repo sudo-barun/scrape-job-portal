@@ -4,15 +4,13 @@ namespace App\Interfaces;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-interface JobPortal
+interface JobPortalInterface
 {
     public function getLogoUrl();
 
     public function getBaseUrl();
 
     public function getPrefix();
-
-    public function getContentFiles();
 
     public function getUrl($page);
 

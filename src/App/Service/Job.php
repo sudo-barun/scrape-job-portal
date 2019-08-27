@@ -2,11 +2,18 @@
 
 namespace App\Service;
 
-use App\Interfaces\JobPortal;
-use Symfony\Component\DomCrawler\Crawler;
+use App\Interfaces\DataStoreInterface;
+use App\Interfaces\JobPortalInterface;
 
 class Job
 {
+    protected $dataProvider;
+
+    public function __construct(DataStoreInterface $dataProvider)
+    {
+        $this->dataProvider = $dataProvider;
+    }
+
     public function splitQueryTerms($query)
     {
         return array_filter(explode(' ', $query));
@@ -19,7 +26,7 @@ class Job
 
         $jobPortalsJobs = [];
 
-        /** @var JobPortal[] $jobPortals */
+        /** @var JobPortalInterface[] $jobPortals */
         $jobPortals = [
             new Merojob(),
             new Jobsnepal(),
@@ -27,7 +34,7 @@ class Job
         ];
 
         foreach ($jobPortals as $jobPortal) {
-            $jobs = $this->getJobsOfJobPortal($jobPortal, $terms);
+            $jobs = $this->getJobsOfJobPortal($jobPortal);
             $jobs = $this->filterByTerms($jobs, $terms);
             $jobPortalsJobs[$jobPortal->getPrefix()] = [
                 'jobs' => $jobs,
@@ -38,21 +45,10 @@ class Job
         return $jobPortalsJobs;
     }
 
-    protected function getJobsOfJobPortal(JobPortal $jobPortal)
+    protected function getJobsOfJobPortal(JobPortalInterface $jobPortal)
     {
-        $jobs = [];
-        $files = $jobPortal->getContentFiles();
-        foreach ($files as $file) {
-            $content = file_get_contents($file);
-            try {
-                $scrappedJobs = $jobPortal->scrape(new Crawler($content));
-            } catch (\InvalidArgumentException $ex) {
-                error_log(sprintf('Failed to scrape: %s', $ex->getMessage()));
-                continue;
-            }
-            $jobs = array_merge($jobs, $scrappedJobs);
-        }
-        return $jobs;
+        $crawledItems = $this->dataProvider->getCrawledItems($jobPortal);
+        return $crawledItems;
     }
 
     public function filterByTerms($jobs, $terms)

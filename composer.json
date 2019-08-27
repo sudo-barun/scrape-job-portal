@@ -13,6 +13,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "symfony/console": "^3.4",
         "vlucas/phpdotenv": "^3.4",
-        "northwoods/config": "^2.0"
+        "northwoods/config": "^2.0",
+        "illuminate/database": "^5.5"
     }
 }

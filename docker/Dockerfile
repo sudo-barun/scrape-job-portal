@@ -4,7 +4,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    php7.2 php7.2-common php7.2-mbstring php-bcmath php7.2-zip php7.2-curl php7.2-xml \
+    php7.2 php7.2-common php7.2-mbstring php-bcmath php7.2-zip php7.2-curl \
+    php7.2-xml php7.2-pgsql \
     composer
 
 RUN apt-get install -y --no-install-recommends nano curl
@@ -12,8 +13,6 @@ RUN apt-get install -y --no-install-recommends nano curl
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
 RUN apt-get install -y nodejs
-
-#RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 RUN useradd -mU appuser
 

@@ -2,10 +2,12 @@
 
 namespace App\Command;
 
-use App\Interfaces\JobPortal;
+use App\CrawledItem;
+use App\Interfaces\JobPortalInterface;
 use App\Service\Jobsnepal;
 use App\Service\Kathmandujobs;
 use App\Service\Merojob;
+use App\Util;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use Symfony\Component\Console\Command\Command;
@@ -38,20 +40,9 @@ class Scrape extends Command
         return $response->getBody()->getContents();
     }
 
-    protected function storeContent($content, $filename)
-    {
-        $contentDir = config('app.content_dir');
-        $segments = explode('/', $filename);
-        $dir = $contentDir . '/' . join('/', array_slice($segments, 0, count($segments) - 1));
-        if (! is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        file_put_contents("$contentDir/$filename", $content);
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var JobPortal[] $jobPortals */
+        /** @var JobPortalInterface[] $jobPortals */
         $jobPortals = [
             new Jobsnepal(),
             new Merojob(),
@@ -59,6 +50,10 @@ class Scrape extends Command
         ];
 
         foreach ($jobPortals as $jobPortal) {
+
+            $dataStore = Util::getDataStore();
+            $lastVersion = $dataStore->getLastVersion($jobPortal);
+
             echo "\n";
             echo sprintf('Scrapping %s (%s):', strtoupper($jobPortal->getPrefix()), $jobPortal->getBaseUrl());
             echo "\n";
@@ -76,8 +71,14 @@ class Scrape extends Command
                     echo sprintf('Connection error occurred: %s', $ex->getMessage());
                     continue 2;
                 }
-                $filename = $jobPortal->getPrefix() . '/' . $page . '.html';
-                $this->storeContent($content, $filename);
+                $crawledItem = (new CrawledItem())
+                    ->setContent($content)
+                    ->setJobPortal($jobPortal->getPrefix())
+                    ->setPage($page)
+                    ->setUrl($url)
+                    ->setVersion($lastVersion + 1)
+                ;
+                $dataStore->saveCrawledItem($crawledItem);
 
                 $hasNext = $jobPortal->hasNext(new Crawler($content));
                 sleep(config('app.sleep_duration_second'));
