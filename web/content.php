@@ -93,6 +93,16 @@
 
 </div>
 
+<div class="page-bottom-gap"></div>
+
+<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <div class="mx-auto navbar-text">
+            Contribute on <a href="https://github.com/sudo-barun/scrape-job-portal" target="_blank">GitHub <span class="fab fa-github"></span></a>
+        </div>
+    </div>
+</nav>
+
 <script src="js/app.js"></script>
 
 </body>

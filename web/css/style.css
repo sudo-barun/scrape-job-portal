@@ -11,8 +11,21 @@ a.job-link:visited {
 .jump-links {
     position: fixed;
     right: 16px;
-    bottom: 0;
-    z-index: 1;
+    bottom: 56px;
+    z-index: 10000;
     background-color: #fff;
     padding: 16px;
+    box-shadow: 0 0 10px #ddd;
+}
+
+.fixed-bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.page-bottom-gap {
+    padding-bottom: 56px;
 }
