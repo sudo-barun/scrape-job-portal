@@ -4,6 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Scrape Job Portals</title>
+    <meta name="title" content="Scrape Job Portals">
+    <meta name="description" content="All Jobs In One Place">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://scrape-job-portal.herokuapp.com">
+    <meta property="og:title" content="Scrape Job Portals">
+    <meta property="og:description" content="All Jobs In One Place">
+    <meta property="og:image" content="http://barunkharel.info.np/cover.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://scrape-job-portal.herokuapp.com">
+    <meta property="twitter:title" content="Scrape Job Portals">
+    <meta property="twitter:description" content="All Jobs In One Place">
+    <meta property="twitter:image" content="http://barunkharel.info.np/cover.png">
+
     <link rel="stylesheet" href="css/app.css" >
     <link rel="stylesheet" href="css/style.css">
 </head>
