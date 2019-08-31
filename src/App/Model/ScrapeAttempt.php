@@ -10,6 +10,6 @@ class ScrapeAttempt extends Model
 
     public function scrapeLogs()
     {
-        return $this->hasMany(ScrapeLog::class);
+        return $this->hasMany(ScrapeLog::class, 'attempt_id');
     }
 }

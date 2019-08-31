@@ -3,29 +3,32 @@
 namespace App;
 
 use App\Interfaces\JobPortalInterface;
+use App\Model\ScrapeAttempt;
 use App\Model\ScrapeLog;
+use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Store
 {
-    public function getLastVersion(JobPortalInterface $jobPortal)
+    public function getLastScrapeAttempt(JobPortalInterface $jobPortal)
     {
-        return ScrapeLog::where([
-            'job_portal' => $jobPortal->getPrefix(),
-        ])->max('version');//select('max(version)','max')->get()->max;
+        return ScrapeAttempt::whereHas('scrapeLogs', function (Builder $query) use ($jobPortal) {
+            $query->where('job_portal', $jobPortal->getPrefix());
+        })->whereNotNull('completed_at')->orderBy('started_at', 'desc')->first();
     }
 
     public function getJobsOfJobPortal(JobPortalInterface $jobPortal)
     {
         $jobs = [];
-        $crawledItems = ScrapeLog::where([
+        $lastAttempt = $this->getLastScrapeAttempt($jobPortal);
+        $scrapeLogs = ScrapeLog::where([
             'job_portal' => $jobPortal->getPrefix(),
-            'version' => $this->getLastVersion($jobPortal),
+            'attempt_id' => $lastAttempt->id,
         ])->get()->all();
 
-        foreach ($crawledItems as $crawledItem) {
+        foreach ($scrapeLogs as $scrapeLog) {
             try {
-                $response = \GuzzleHttp\Psr7\parse_response($crawledItem->response);
+                $response = \GuzzleHttp\Psr7\parse_response($scrapeLog->response);
                 $scrappedJobs = $jobPortal->scrape(new Crawler((string) $response->getBody()));
             } catch (\InvalidArgumentException $ex) {
                 error_log(sprintf('Failed to scrape: %s', $ex->getMessage()));

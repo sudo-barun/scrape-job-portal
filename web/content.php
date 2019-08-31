@@ -36,8 +36,8 @@
 
     <div class="jump-links">
         Jump to:
-        <div><a href="#merojob">Merojob</a></div>
         <div><a href="#jobsnepal">JobsNepal</a></div>
+        <div><a href="#merojob">Merojob</a></div>
         <div><a href="#kathmandujobs">KathmanduJobs</a></div>
     </div>
 
@@ -55,7 +55,7 @@
 
     <div class="mt-5"></div>
 
-    <?php foreach ($portalJobs as $portal => $jobData): $jobs = $jobData['jobs']; ?>
+    <?php foreach ($portalsData as $portal => $jobData): $jobs = $jobData['jobs']; ?>
         <div id="<?= $portal ?>" class="card mb-5">
             <div class="card-header">
                 <h5 class="job-portal">
@@ -107,6 +107,18 @@
             </div>
         </div>
     <?php endforeach ?>
+
+    <?php if ($lastAttemptMap): ?>
+    <div>
+        Latest scrapes:
+        <?php foreach ($lastAttemptMap as $datetime => $jobPortals): ?>
+            <div>
+                <?= $datetime ?> :
+                <?= join(', ', array_map('strtoupper', $jobPortals)) ?>
+            </div>
+        <?php endforeach ?>
+    </div>
+    <?php endif ?>
 
 </div>
 

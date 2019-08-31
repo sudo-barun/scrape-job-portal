@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Model\ScrapeLog;
 use App\Store;
 use App\Interfaces\JobPortalInterface;
 use App\Model\ScrapeAttempt;
@@ -71,8 +72,6 @@ class Scrape extends Command
 
         foreach ($jobPortals as $jobPortal) {
 
-            $lastVersion = $this->store->getLastVersion($jobPortal);
-
             echo "\n";
             echo sprintf('Scrapping %s (%s):', strtoupper($jobPortal->getPrefix()), $jobPortal->getBaseUrl());
             echo "\n";
@@ -81,9 +80,9 @@ class Scrape extends Command
                 $page = $i + 1;
                 $url = $jobPortal->getUrl($page);
 
-                $scrapeLog = $scrapeAttempt->scrapeLogs()->newModelInstance();
+                $scrapeLog = new ScrapeLog();
+                $scrapeLog->attempt_id = $scrapeAttempt->id;
                 $scrapeLog->job_portal = $jobPortal->getPrefix();
-                $scrapeLog->version = $lastVersion + 1;
                 $scrapeLog->url = $url;
                 $scrapeLog->started_at = new DateTime();
                 $scrapeLog->completed_at = null;
@@ -108,6 +107,7 @@ class Scrape extends Command
                     echo sprintf('Error occurred: %s', $ex->getMessage());
                     $request = array_values(array_slice($this->container, -1))[0]['request'];
                     $response = $ex->getResponse();
+                    $scrapeLog->completed_at = new DateTime();
                     $scrapeLog->request = \GuzzleHttp\Psr7\str($request);
                     $scrapeLog->response = \GuzzleHttp\Psr7\str($response);
                     $scrapeLog->success = false;

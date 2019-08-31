@@ -28,15 +28,17 @@ class Job
 
         /** @var JobPortalInterface[] $jobPortals */
         $jobPortals = [
-            new Merojob(),
             new Jobsnepal(),
+            new Merojob(),
             new Kathmandujobs(),
         ];
 
         foreach ($jobPortals as $jobPortal) {
+            $lastAttempt = $this->store->getLastScrapeAttempt($jobPortal);
             $jobs = $this->store->getJobsOfJobPortal($jobPortal);
             $jobs = $this->filterByTerms($jobs, $terms);
             $jobPortalsJobs[$jobPortal->getPrefix()] = [
+                'lastAttempt' => $lastAttempt,
                 'jobs' => $jobs,
                 'logo' => $jobPortal->getLogoUrl(),
             ];

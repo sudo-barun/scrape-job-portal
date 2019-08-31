@@ -7,9 +7,8 @@ CREATE TABLE scrape_attempts (
 
 CREATE TABLE scrape_logs (
   id SERIAL NOT NULL,
-  attempt_id REFERENCES scrape_attempts (id),
-  job_portal varchar NOT NULL,
-  "version" int NOT NULL,
+  attempt_id INT NOT NULL REFERENCES scrape_attempts (id),
+  job_portal VARCHAR NOT NULL,
   url varchar NOT NULL,
   started_at TIMESTAMP NOT NULL,
   completed_at TIMESTAMP NULL,

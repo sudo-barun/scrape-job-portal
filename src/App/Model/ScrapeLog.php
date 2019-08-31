@@ -16,28 +16,8 @@ class ScrapeLog extends Model
         'content',
     ];
 
-    public function getJobPortal()
+    public function scrapeAttempt()
     {
-        return $this->job_portal;
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
+        return $this->belongsTo(ScrapeAttempt::class, 'attempt_id');
     }
 }
