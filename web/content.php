@@ -26,7 +26,11 @@
 </head>
 <body>
 
-<div class="mt-5"></div>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <div class="h1 text-center">IT jobs in one place</div>
+    </div>
+</div>
 
 <div class="container">
 
@@ -37,10 +41,6 @@
         <div><a href="#kathmandujobs">KathmanduJobs</a></div>
     </div>
 
-    <div class="jumbotron">
-        <div class="h1 text-center">IT jobs in one place</div>
-    </div>
-
     <form autocomplete="off">
         <div class="input-group">
             <div class="input-group-prepend">
@@ -48,7 +48,7 @@
             </div>
             <input name="q" value="<?= $q ?>" autofocus placeholder="e.g. php designer android junior" class="form-control">
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span></button>
             </div>
         </div>
     </form>
@@ -86,19 +86,19 @@
                             <div class="col-lg-6">
                                 <div title="Address">
                                     <span class="fa fa-map-marker"></span>
-                                    <?= $job['address'] ?? 'N.A.' ?>
+                                    <?= $job['address'] ?? '<abbr title="Not Available" class="small">N.A.</abbr>' ?>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div title="Posted On">
                                     <span class="fa fa-folder-plus"></span>
-                                    <?= $job['posted_on'] ?? 'N.A.' ?>
+                                    <?= $job['posted_on'] ?? '<abbr title="Not Available" class="small">N.A.</abbr>' ?>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div title="Expires On">
                                     <span class="fa fa-ban"></span>
-                                    <?= $job['expires_on'] ?? 'N.A.' ?>
+                                    <?= $job['expires_on'] ?? '<abbr title="Not Available" class="small">N.A.</abbr>' ?>
                                 </div>
                             </div>
                         </div>

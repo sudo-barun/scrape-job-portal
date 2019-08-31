@@ -5,7 +5,7 @@ services:
     image: scrape_job_portal
     build:
       context: ..
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./Dockerfile
     volumes:
       - ..:/var/www
     ports:

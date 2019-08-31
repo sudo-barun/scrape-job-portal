@@ -2,10 +2,9 @@
 
 namespace App\Model;
 
-use App\Interfaces\CrawledItemInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class CrawledItem extends Model implements CrawledItemInterface
+class ScrapeLog extends Model
 {
     public $timestamps = false;
 

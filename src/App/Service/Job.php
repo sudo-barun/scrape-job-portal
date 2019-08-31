@@ -2,16 +2,16 @@
 
 namespace App\Service;
 
-use App\Interfaces\DataStoreInterface;
+use App\Store;
 use App\Interfaces\JobPortalInterface;
 
 class Job
 {
-    protected $dataProvider;
+    protected $store;
 
-    public function __construct(DataStoreInterface $dataProvider)
+    public function __construct()
     {
-        $this->dataProvider = $dataProvider;
+        $this->store = new Store();
     }
 
     public function splitQueryTerms($query)
@@ -34,7 +34,7 @@ class Job
         ];
 
         foreach ($jobPortals as $jobPortal) {
-            $jobs = $this->getJobsOfJobPortal($jobPortal);
+            $jobs = $this->store->getJobsOfJobPortal($jobPortal);
             $jobs = $this->filterByTerms($jobs, $terms);
             $jobPortalsJobs[$jobPortal->getPrefix()] = [
                 'jobs' => $jobs,
@@ -43,12 +43,6 @@ class Job
         }
 
         return $jobPortalsJobs;
-    }
-
-    protected function getJobsOfJobPortal(JobPortalInterface $jobPortal)
-    {
-        $crawledItems = $this->dataProvider->getCrawledItems($jobPortal);
-        return $crawledItems;
     }
 
     public function filterByTerms($jobs, $terms)
