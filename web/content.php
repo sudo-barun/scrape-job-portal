@@ -46,7 +46,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Search Terms: </span>
             </div>
-            <input name="q" value="<?= $q ?>" autofocus placeholder="e.g. php designer android junior" class="form-control">
+            <input name="q" value="<?= $q ?>" autofocus placeholder="e.g. php intern lalitpur" class="form-control">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary"><span class="fa fa-search"></span></button>
             </div>

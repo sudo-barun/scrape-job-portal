@@ -9,6 +9,9 @@ $jobService = new \App\Service\Job();
 $portalsData = $jobService->getAll($_GET);
 $lastAttempts = array_reduce($portalsData, function ($acc, $portalData) {
     $lastAttempt = $portalData['lastAttempt'];
+    if (! $lastAttempt) {
+        return $acc;
+    }
     foreach ($acc as $attempt) {
         if ($attempt->id === $lastAttempt->id) {
             return $acc;

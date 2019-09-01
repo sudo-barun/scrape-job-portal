@@ -56,7 +56,13 @@ class Job
             $matches = function ($text) use (&$regexTerms) {
                 return 1 === preg_match("#(" .join('|', $regexTerms) . ")#i", $text);
             };
-            return $matches($job['title']) || $matches($job['company']['title']);
+            return (
+                $matches($job['title'])
+                ||
+                $matches($job['type'])
+                ||
+                $matches($job['address'])
+            );
         }));
 
         return $jobs;

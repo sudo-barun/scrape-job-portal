@@ -29,3 +29,7 @@ a.job-link:visited {
 .page-bottom-gap {
     padding-bottom: 56px;
 }
+
+.job-list.list-group .job-item:nth-of-type(even) {
+    background-color: #faf8fa;
+}

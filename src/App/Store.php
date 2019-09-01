@@ -21,10 +21,14 @@ class Store
     {
         $jobs = [];
         $lastAttempt = $this->getLastScrapeAttempt($jobPortal);
-        $scrapeLogs = ScrapeLog::where([
-            'job_portal' => $jobPortal->getPrefix(),
-            'attempt_id' => $lastAttempt->id,
-        ])->get()->all();
+        if ($lastAttempt) {
+            $scrapeLogs = ScrapeLog::where([
+                'job_portal' => $jobPortal->getPrefix(),
+                'attempt_id' => $lastAttempt->id,
+            ])->get()->all();
+        } else {
+            $scrapeLogs = [];
+        }
 
         foreach ($scrapeLogs as $scrapeLog) {
             try {
