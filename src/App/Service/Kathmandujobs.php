@@ -26,7 +26,7 @@ class Kathmandujobs extends AbstractJobPortal
 
     public function getLogoUrl()
     {
-        return 'https://kathmandujobs.com/wp-content/uploads/2019/02/Kathmandu_Jobs-1-e1551259408555-100x100.png';
+        return 'https://kathmandujobs.com/assets/img/favicon.png';
     }
 
     public function scrape(Crawler $crawler)

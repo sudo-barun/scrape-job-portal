@@ -27,7 +27,7 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
 
     public function getLogoUrl()
     {
-        return 'https://www.jobsnepal.com/favicon.ico';
+        return 'https://www.jobsnepal.com/assets/front/images/favicons/android-icon-192x192.png';
     }
 
     public function hasNext(Crawler $crawler)
