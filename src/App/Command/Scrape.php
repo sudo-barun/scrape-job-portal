@@ -62,7 +62,7 @@ class Scrape extends Command
         $jobPortals = [
             new Jobsnepal(),
             new Merojob(),
-            new Kathmandujobs(),
+//            new Kathmandujobs(),
         ];
 
         $scrapeAttempt = new ScrapeAttempt();

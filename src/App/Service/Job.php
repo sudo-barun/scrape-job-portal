@@ -30,7 +30,7 @@ class Job
         $jobPortals = [
             new Jobsnepal(),
             new Merojob(),
-            new Kathmandujobs(),
+//            new Kathmandujobs(),
         ];
 
         foreach ($jobPortals as $jobPortal) {
