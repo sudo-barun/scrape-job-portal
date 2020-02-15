@@ -8,7 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
 {
     protected $prefix = 'jobsnepal';
-    protected $baseUrl = 'https://www.jobsnepal.com/category/it-jobs';
+    protected $baseUrl = 'https://www.jobsnepal.com/category/information-technology-jobs';
 
     public function getBaseUrl()
     {
@@ -22,7 +22,7 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
 
     public function getUrl($page)
     {
-        return $page === 1 ? $this->baseUrl : $this->baseUrl . '/page-' . $page;
+        return $page === 1 ? $this->baseUrl : $this->baseUrl . '?' . http_build_query([ 'page' => $page ]);
     }
 
     public function getLogoUrl()
@@ -32,7 +32,7 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
 
     public function hasNext(Crawler $crawler)
     {
-        $next = $crawler->filter('#main-content #pagination-ctrl-block .pagination-next');
+        $next = $crawler->filter('.pagination > .page-item:last-child a');
         $hasNext = !! $next->count();
         return $hasNext;
     }
@@ -40,21 +40,23 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
     public function scrape(Crawler $crawler)
     {
         $jobs = [];
-        $filtered = $crawler->filter('#main-content .job-listing table > tr.row');
+        $filtered = $crawler->filter('.job-list-card');
         foreach ($filtered as $row) {
             $itemCrawler = new Crawler($row);
-            $jobTitle = $itemCrawler->filter('.job-item');
+            $jobTitle = $itemCrawler->filter('.media-title > a');
+            $addressCrawler = $itemCrawler->filter('.media-title + ul + div > ul > li .icon-location4 + div');
+            $companyCrawler = $itemCrawler->filter('.media-title + ul > li > a');
             $jobs[] = [
                 'title' => trim($jobTitle->text()),
                 'link' => $jobTitle->attr('href'),
                 'company' => [
-                    'title' => trim($itemCrawler->filter('td:nth-child(2)')->text()),
-                    'link' => $itemCrawler->filter('td:nth-child(2) a')->attr('href'),
+                    'title' => trim($companyCrawler->text()),
+                    'link' => $companyCrawler->attr('href'),
                 ],
-                'type' => $itemCrawler->filter('td:nth-child(3)')->text(),
+                'type' => null,
                 'posted_on' => null,
-                'expires_on' => $itemCrawler->filter('td:nth-child(4)')->text(),
-                'address' => null,
+                'expires_on' => null,
+                'address' => $addressCrawler->count() ? $addressCrawler->text() : null,
             ];
         }
         return $jobs;

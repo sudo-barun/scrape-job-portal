@@ -43,10 +43,14 @@ class Merojob extends AbstractJobPortal implements JobPortalInterface
         $itemsCrawler = $crawler->filter('#search_bar > .search-results > #search_job .card');
         foreach ($itemsCrawler as $itemNode) {
             $itemCrawler = new Crawler($itemNode);
+            if (! $itemCrawler->filter('.card-body')->count()) {
+                // skip ad
+                continue;
+            }
             $titleCrawler = $itemCrawler->filter('.card-body .job-card h1 a');
-            $link = $this->buildAbsoluteUrl($titleCrawler->attr('href'));
+            $link = $titleCrawler->count() ? $this->buildAbsoluteUrl($titleCrawler->attr('href')) : null;
             $jobs[] = [
-                'title' => trim($titleCrawler->attr('title')),
+                'title' => $titleCrawler->count() ? trim($titleCrawler->attr('title')) : null,
                 'link' => $link,
                 'company' => $this->getCompany($itemCrawler),
                 'type' => null,
