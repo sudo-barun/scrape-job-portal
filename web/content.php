@@ -36,9 +36,9 @@
 
     <div class="jump-links">
         Jump to:
-        <div><a href="#jobsnepal">JobsNepal</a></div>
-        <div><a href="#merojob">Merojob</a></div>
-        <div><a href="#kathmandujobs">KathmanduJobs</a></div>
+        <?php foreach ($portalsData as $portal => $jobPortalData): ?>
+            <div><a href="#<?= $portal ?>"><?= $jobPortalData['name'] ?></a></div>
+        <?php endforeach ?>
     </div>
 
     <form autocomplete="off">

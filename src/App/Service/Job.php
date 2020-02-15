@@ -38,6 +38,7 @@ class Job
             $jobs = $this->store->getJobsOfJobPortal($jobPortal);
             $jobs = $this->filterByTerms($jobs, $terms);
             $jobPortalsJobs[$jobPortal->getPrefix()] = [
+                'name' => $jobPortal->getName(),
                 'lastAttempt' => $lastAttempt,
                 'jobs' => $jobs,
                 'logo' => $jobPortal->getLogoUrl(),

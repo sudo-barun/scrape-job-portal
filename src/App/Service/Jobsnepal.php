@@ -10,6 +10,11 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
     protected $prefix = 'jobsnepal';
     protected $baseUrl = 'https://www.jobsnepal.com/category/information-technology-jobs';
 
+    public function getName()
+    {
+        return 'JobsNepal';
+    }
+
     public function getBaseUrl()
     {
         return $this->baseUrl;

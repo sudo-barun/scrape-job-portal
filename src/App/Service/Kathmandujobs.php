@@ -9,6 +9,11 @@ class Kathmandujobs extends AbstractJobPortal
     protected $prefix = 'kathmandujobs';
     protected $baseUrl = 'https://kathmandujobs.com/jobs/mobile-web-software-development/';
 
+    public function getName()
+    {
+        return 'KathmanduJobs';
+    }
+
     public function getPrefix()
     {
         return $this->prefix;

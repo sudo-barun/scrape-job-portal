@@ -10,6 +10,11 @@ class Merojob extends AbstractJobPortal implements JobPortalInterface
     protected $prefix = 'merojob';
     protected $baseUrl = 'https://merojob.com/category/it-telecommunication/';
 
+    public function getName()
+    {
+        return 'Merojob';
+    }
+
     public function getBaseUrl()
     {
         return $this->baseUrl;

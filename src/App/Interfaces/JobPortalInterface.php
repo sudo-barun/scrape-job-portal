@@ -6,6 +6,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 interface JobPortalInterface
 {
+    public function getName();
+
     public function getLogoUrl();
 
     public function getBaseUrl();
