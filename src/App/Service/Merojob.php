@@ -69,15 +69,16 @@ class Merojob extends AbstractJobPortal implements JobPortalInterface
 
     protected function getCompany(Crawler $jobItemCrawler)
     {
-        $companyCrawler = $jobItemCrawler->filter('.card-body .job-card h3 a');
+        $companyCrawler = $jobItemCrawler->filter('.card-body .job-card h3');
         if (! $companyCrawler->count()) {
             return [
                 'title' => null,
                 'link' => null,
             ];
         }
+        $companyLinkCrawler = $companyCrawler->filter('a');
         $title = trim($companyCrawler->text());
-        $link = $this->buildAbsoluteUrl($companyCrawler->attr('href'));
+        $link = $companyLinkCrawler->count() ? $this->buildAbsoluteUrl($companyLinkCrawler->attr('href')) : null;
         return compact('title', 'link');
     }
 
