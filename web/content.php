@@ -71,7 +71,7 @@
                     <div class="job-item list-group-item">
                         <h6 class="job-title">
                             <?= $i + 1 ?>.
-                            <a href="<?= $job['link'] ?>" target="_blank" class="job-link">
+                            <a href="<?= $job['link'] ?>" target="_blank" rel="nofollow noreferrer noopener" class="job-link">
                                 <?= $job['title'] ?>
                             </a>
                             <span class="badge badge-pill badge-light"><?= $job['type'] ?></span>
