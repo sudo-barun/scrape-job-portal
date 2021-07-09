@@ -45,12 +45,12 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
     public function scrape(Crawler $crawler)
     {
         $jobs = [];
-        $filtered = $crawler->filter('.job-list-card');
+        $filtered = $crawler->filter('#app .top-content .card');
         foreach ($filtered as $row) {
             $itemCrawler = new Crawler($row);
-            $jobTitle = $itemCrawler->filter('.media-title > a');
-            $addressCrawler = $itemCrawler->filter('.media-title + ul + div > ul > li .icon-location4 + div');
-            $companyCrawler = $itemCrawler->filter('.media-title + ul > li > a');
+            $jobTitle = $itemCrawler->filter('.job-title > a');
+            $addressCrawler = $itemCrawler->filter('.job-title + ul > li:nth-child(2) > div > div');
+            $companyCrawler = $itemCrawler->filter('.job-title + ul > li:nth-child(1) > div > div');
             $jobs[] = [
                 'title' => trim($jobTitle->text()),
                 'link' => $jobTitle->attr('href'),
