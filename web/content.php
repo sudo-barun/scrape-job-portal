@@ -90,6 +90,23 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
+                                <div title="Salary">
+                                    <span class="fa fa-money-bill-wave"></span>
+                                    <?= $job['salary'] ?? '<abbr title="Not Available" class="small">N.A.</abbr>' ?>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div title="Skills">
+                                    <span class="fa fa-tasks"></span>
+                                    <?= isset($job['skills'])
+                                        ? join('&nbsp;', array_map(function ($s) {
+                                        return '<span class="badge badge-secondary">' . $s . '</span>';
+                                        }, $job['skills']))
+                                        : '<abbr title="Not Available" class="small">N.A.</abbr>'
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
                                 <div title="Posted On">
                                     <span class="fa fa-folder-plus"></span>
                                     <?= $job['posted_on'] ?? '<abbr title="Not Available" class="small">N.A.</abbr>' ?>

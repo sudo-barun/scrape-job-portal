@@ -51,6 +51,7 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
             $jobTitle = $itemCrawler->filter('.job-title > a');
             $addressCrawler = $itemCrawler->filter('.job-title + ul > li > div > .icon-location4 + div');
             $companyCrawler = $itemCrawler->filter('.job-title + ul > li > div > .icon-briefcase3 + div');
+            $salaryCrawler = $itemCrawler->filter('.job-title + ul > li > div > .icon-coin-dollar + div');
             $jobs[] = [
                 'title' => trim($jobTitle->text()),
                 'link' => $jobTitle->attr('href'),
@@ -62,6 +63,7 @@ class Jobsnepal extends AbstractJobPortal implements JobPortalInterface
                 'posted_on' => null,
                 'expires_on' => null,
                 'address' => $addressCrawler->count() ? $addressCrawler->text() : null,
+                'salary' => $salaryCrawler->count() ? $salaryCrawler->text() : null,
             ];
         }
         return $jobs;

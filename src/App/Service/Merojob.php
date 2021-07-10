@@ -54,6 +54,7 @@ class Merojob extends AbstractJobPortal implements JobPortalInterface
             }
             $titleCrawler = $itemCrawler->filter('.card-body .job-card h1 a');
             $link = $titleCrawler->count() ? $this->buildAbsoluteUrl($titleCrawler->attr('href')) : null;
+            $skillsCrawler = $itemCrawler->filter('[itemprop=skills] > span');
             $jobs[] = [
                 'title' => $titleCrawler->count() ? trim($titleCrawler->attr('title')) : null,
                 'link' => $link,
@@ -62,6 +63,9 @@ class Merojob extends AbstractJobPortal implements JobPortalInterface
                 'posted_on' => $itemCrawler->filter('.card-footer meta[itemprop="datePosted"]')->attr('content'),
                 'expires_on' => $itemCrawler->filter('.card-footer meta[itemprop="validThrough"]')->attr('content'),
                 'address' => $this->getAddress($itemCrawler),
+                'skills' => $skillsCrawler->each(function (Crawler $crawler) {
+                    return $crawler->text();
+                }),
             ];
         }
         return $jobs;
